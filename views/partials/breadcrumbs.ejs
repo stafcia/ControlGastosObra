@@ -1,0 +1,28 @@
+<!-- Breadcrumbs Navigation -->
+<div class="t-border-b t-border-gray-200 t-bg-white t-px-2 sm:t-px-5 md:t-px-10 t-h-[65px] t-flex t-items-center">
+        <button id="buttonNav" 
+                class="t-h-10 t-w-10 t-border t-border-gray-200 t-bg-white t-rounded-lg t-mr-3 t-flex t-justify-center t-items-center t-transition-all t-duration-200 hover:t-bg-gray-50 hover:t-border-gray-300 active:t-scale-95 md:t-hidden focus:t-outline-none focus:t-ring-2 focus:t-ring-pri-500 focus:t-ring-opacity-50"
+                aria-label="Abrir menú de navegación"
+                aria-expanded="false">
+                <div class="t-flex t-flex-col t-justify-center t-items-center t-space-y-1 t-transition-all t-duration-300">
+                        <span class="t-bg-gray-700 t-h-0.5 t-w-5 t-rounded-full t-transition-all t-duration-300 t-transform t-origin-center"></span>
+                        <span class="t-bg-gray-700 t-h-0.5 t-w-5 t-rounded-full t-transition-all t-duration-300 t-transform t-origin-center"></span>
+                        <span class="t-bg-gray-700 t-h-0.5 t-w-5 t-rounded-full t-transition-all t-duration-300 t-transform t-origin-center"></span>
+                </div>
+        </button>
+        <% if (typeof subtitle === 'undefined' || subtitle === '') { %>
+                <span class="t-text-sm t-font-regular t-font-p t-text-pri-500 t-bg-pri-50 t-px-4 t-py-2 t-rounded-md t-capitalize"><%= title %></span>
+        <% } else { %>
+                <a href="/inicio" class="t-text-sm t-font-regular t-font-p t-text-gray-500 t-px-2 t-py-2 hover:t-text-pri-800 hover:t-underline">Inicio</a>
+                <img src="/assets/svg/icon-caret-right.svg" class="t-h-3 t-mx-2" />
+                <span class="t-text-sm t-font-regular t-font-p t-text-pri-500 t-bg-pri-50 t-px-4 t-py-2 t-rounded-md"><%= subtitle %></span>
+        <% } %>
+
+        <% if (typeof usuario !== 'undefined') { %>
+                <div class="t-ml-auto">
+                        <a href="/logout" class="btn btn--md btn--pri t-inline-block">
+                                Cerrar Sesión <%= usuario.correo %>
+                        </a>
+                </div>
+        <% } %>        
+</div>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../../partials/public/head'); %>
+  </head>
+  <body class="t-bg-light">
+    <div class="t-h-screen t-flex t-flex-col t-justify-center t-items-center">
+      <div class="t-rounded-lg t-p-4" style="background-color: #424242;">
+        <img
+          src="/assets/img/logoBrahma.webp"
+          alt="Control Gastos Obra - Logo Brahma"
+          class="t-w-[300px] t-mt-3 t-aspect-auto t-rounded-sm" style="background-color: #424242;" />
+      </div>
+
+      <div class="t-bg-white t-bg-opacity-90 t-my-3 t-px-6 t-py-8 t-rounded-lg t-shadow-2xl md:t-w-1/3">
+        <form method="post" action="login">
+          <label class="t-mb-1 t-inline-block t-text-gray-600">Email</label>
+          <input
+            class="t-w-full t-border t-border-gray-200 t-p-3 t-rounded-lg t-mb-3"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="tu@correo.com" />
+          <label class="t-mb-1 t-inline-block t-text-gray-600">Password</label>
+          <input
+            class="t-w-full t-border t-border-gray-200 t-p-3 t-rounded-lg t-mb-3"
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password" />
+          <button
+            type="submit"
+            class="t-w-full t-border t-border-brahma-500 t-bg-brahma-500 hover:t-bg-brahma-600 t-text-white t-p-3 t-rounded-lg">
+            Ingresar
+          </button>
+        </form>
+      </div>
+    </div>
+    <%- include('../../partials/public/foot'); %>
+  </body>
+</html>

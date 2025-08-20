@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply t-px-4 t-py-2 t-rounded t-font-medium t-transition-colors t-duration-200;
+  }
+
+  .btn--sm {
+    @apply t-px-3 t-py-1 t-text-sm;
+  }
+
+  .btn--md {
+    @apply t-px-4 t-py-2;
+  }
+
+  .btn--lg {
+    @apply t-px-6 t-py-3 t-text-lg;
+  }
+
+  .form-control {
+    @apply t-w-full t-border t-border-gray-200 t-p-2 t-rounded-lg focus:t-outline-none focus:t-border-brahma-500 focus:t-ring-1 focus:t-ring-brahma-500;
+  }
+
+  .form-group {
+    @apply t-mb-4;
+  }
+
+  .form-group label {
+    @apply t-block t-text-sm t-font-medium t-text-gray-700 t-mb-1;
+  }
+
+  .form-group label span {
+    @apply t-text-red-500;
+  }
+}

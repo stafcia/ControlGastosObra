@@ -1,0 +1,78 @@
+<nav
+  id="mainNav"
+  class="t-pb-32 md:t-pb-0 t-overflow-auto t-min-h-screen t-h-screen md:t-h-auto t-max-w-[225px] md:t-max-w-none t-bg-brahma-700 t-w-80 t-py-4 t-fixed md:t-static t-z-20 t-translate-x-[-225px] md:t-translate-x-0 t-shadow-lg t-shadow-gray-900-500/50 t-transition t-rounded-r-md md:t-rounded-none">
+  <a href="/inicio" class="t-px-8 t-text-2xl t-font-semibold t-text-white t-inline-block"
+    >Control Gastos</a
+  >
+
+  <span class="t-py-4 t-block">
+    <span class="t-h-[1px] t-mx-auto t-bg-white t-block t-opacity-5"> </span>
+  </span>
+
+  <div
+    class="t-px-4 t-py-3 t-text-white t-text-sm t-rounded-md t-flex t-items-center t-font-medium t-opacity-50">
+    <i class="fas fa-user t-w-5 t-h-5 t-mr-4"></i>
+    <%= usuario %>
+  </div>
+
+  <span class="t-py-4 t-block">
+    <span class="t-h-[1px] t-mx-auto t-bg-white t-block t-opacity-5"> </span>
+  </span>
+
+  <div class="t-px-4">
+    <a
+      href="/inicio"
+      class="t-px-4 t-py-3 t-text-white t-rounded-md t-flex t-items-center t-font-medium <% if (seccion === 'inicio') { %>t-bg-brahma-500<% }else{ %>t-opacity-50 hover:t-opacity-100<% } %>">
+      <i class="fas fa-home t-w-5 t-h-5 t-mr-4"></i>
+      Inicio
+    </a>
+    
+    <!-- Menú desplegable Catálogos -->
+    <div class="t-relative">
+      <button
+        id="catalogosToggle"
+        class="t-w-full t-px-4 t-py-3 t-text-white t-rounded-md t-flex t-items-center t-justify-between t-font-medium <% if (seccion === 'usuarios' || seccion === 'obras') { %>t-bg-brahma-500<% }else{ %>t-opacity-50 hover:t-opacity-100<% } %>">
+        <div class="t-flex t-items-center">
+          <i class="fas fa-folder-open t-w-5 t-h-5 t-mr-4"></i>
+          Catálogos
+        </div>
+        <svg id="catalogosArrow" class="t-w-4 t-h-4 t-transition-transform <% if (seccion === 'usuarios' || seccion === 'obras') { %>t-rotate-180<% } %>" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+      </button>
+      
+      <div id="catalogosMenu" class="t-mt-2 t-ml-6 t-space-y-1 <% if (seccion === 'usuarios' || seccion === 'obras') { %>t-block<% }else{ %>t-hidden<% } %>">
+        <a
+          href="/usuarios"
+          class="t-block t-px-4 t-py-2 t-text-white t-rounded-md t-text-sm t-flex t-items-center <% if (seccion === 'usuarios') { %>t-bg-brahma-400<% }else{ %>t-opacity-60 hover:t-opacity-100 hover:t-bg-brahma-600<% } %>">
+          <i class="fas fa-users t-w-4 t-h-4 t-mr-3"></i>
+          Usuarios
+        </a>
+        
+        <a
+          href="/obras"
+          class="t-block t-px-4 t-py-2 t-text-white t-rounded-md t-text-sm t-flex t-items-center <% if (seccion === 'obras') { %>t-bg-brahma-400<% }else{ %>t-opacity-60 hover:t-opacity-100 hover:t-bg-brahma-600<% } %>">
+          <i class="fas fa-hard-hat t-w-4 t-h-4 t-mr-3"></i>
+          Obras
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <span class="t-py-4 t-block">
+    <span class="t-h-[1px] t-mx-auto t-bg-white t-block t-opacity-5"> </span>
+  </span>
+
+  <div class="t-px-4">
+    <a
+      href="/logout"
+      class="t-px-4 t-py-3 t-text-white t-rounded-md t-flex t-items-center t-font-medium t-opacity-50 hover:t-opacity-100">
+      <i class="fas fa-sign-out-alt t-w-5 t-h-5 t-mr-4"></i>
+      Cerrar Sesión
+    </a>
+  </div>
+</nav>
+
+<div
+  id="overlayNav"
+  class="t-z-10 t-bg-black t-opacity-0 t-left-0 t-right-0 t-top-0 t-bottom-0 md:t-hidden t-transition"></div>
