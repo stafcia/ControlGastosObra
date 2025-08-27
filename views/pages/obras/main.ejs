@@ -1,24 +1,33 @@
 <div class="t-w-full">
   <%- include('../../partials/breadcrumbs'); %>
-  
+
   <div class="t-px-2 sm:t-px-5 md:t-px-10 t-w-full t-min-w-[350px]">
     <%- include('../../partials/page-title'); %>
 
     <!-- Mensajes de error/éxito -->
-    <% if (typeof query !== 'undefined') { %>
-      <% if (query.error) { %>
-        <div id="errorMessage" class="t-bg-red-100 t-border t-border-red-400 t-text-red-700 t-px-4 t-py-3 t-rounded t-mb-4 t-flex t-justify-between t-items-center">
-          <span><%= query.error %></span>
-          <button onclick="cerrarMensaje('errorMessage')" class="t-text-red-700 hover:t-text-red-900 t-font-bold t-text-lg t-leading-none">×</button>
-        </div>
-      <% } %>
-      <% if (query.success) { %>
-        <div id="successMessage" class="t-bg-green-100 t-border t-border-green-400 t-text-green-700 t-px-4 t-py-3 t-rounded t-mb-4 t-flex t-justify-between t-items-center">
-          <span><%= query.success %></span>
-          <button onclick="cerrarMensaje('successMessage')" class="t-text-green-700 hover:t-text-green-900 t-font-bold t-text-lg t-leading-none">×</button>
-        </div>
-      <% } %>
-    <% } %>
+    <% if (typeof query !== 'undefined') { %> <% if (query.error) { %>
+    <div
+      id="errorMessage"
+      class="t-bg-red-100 t-border t-border-red-400 t-text-red-700 t-px-4 t-py-3 t-rounded t-mb-4 t-flex t-justify-between t-items-center">
+      <span><%= query.error %></span>
+      <button
+        onclick="cerrarMensaje('errorMessage')"
+        class="t-text-red-700 hover:t-text-red-900 t-font-bold t-text-lg t-leading-none">
+        ×
+      </button>
+    </div>
+    <% } %> <% if (query.success) { %>
+    <div
+      id="successMessage"
+      class="t-bg-green-100 t-border t-border-green-400 t-text-green-700 t-px-4 t-py-3 t-rounded t-mb-4 t-flex t-justify-between t-items-center">
+      <span><%= query.success %></span>
+      <button
+        onclick="cerrarMensaje('successMessage')"
+        class="t-text-green-700 hover:t-text-green-900 t-font-bold t-text-lg t-leading-none">
+        ×
+      </button>
+    </div>
+    <% } %> <% } %>
 
     <!-- Botón Nueva Obra -->
     <div class="t-mb-4 t-flex t-justify-end">
@@ -28,7 +37,7 @@
         + Nueva Obra
       </button>
     </div>
-    
+
     <!-- Contenedor de la Tabla -->
     <div class="t-bg-white t-border t-border-gray-200 t-rounded-lg md:t-mb-10">
       <div class="t-p-5 t-border-b t-border-gray-200">
@@ -50,7 +59,10 @@
                 <tr>
                   <td>
                     <div class="t-flex t-items-center">
-                      <span class="btn btn--sm t-border t-text-gray-500 t-border-gray-200 hover:t-bg-gray-50 xl:t-hidden">►</span>
+                      <span
+                        class="btn btn--sm t-border t-text-gray-500 t-border-gray-200 hover:t-bg-gray-50 xl:t-hidden"
+                        >►</span
+                      >
                       <span class="t-ml-2"><%= obra.id %></span>
                     </div>
                   </td>
@@ -65,42 +77,49 @@
                       <div class="t-font-medium t-text-gray-900"><%= obra.clienteNombre %></div>
                       <div class="t-text-sm t-text-gray-500"><%= obra.clienteCorreo %></div>
                       <% if (obra.clienteTelefono) { %>
-                        <div class="t-text-sm t-text-gray-500"><%= obra.clienteTelefono %></div>
+                      <div class="t-text-sm t-text-gray-500"><%= obra.clienteTelefono %></div>
                       <% } %>
                     </div>
                   </td>
                   <td>
-                    <span class="t-inline-block t-text-center t-text-sm t-px-2 t-py-1 t-rounded-md t-border 
-                      <% if (obra.estado === 'activa') { %>t-bg-green-50 t-border-green-500 t-text-green-500<% } 
-                         else if (obra.estado === 'pausada') { %>t-bg-yellow-50 t-border-yellow-500 t-text-yellow-500<% } 
-                         else { %>t-bg-gray-50 t-border-gray-500 t-text-gray-500<% } %>">
+                    <span
+                      class="t-inline-block t-text-center t-text-sm t-px-2 t-py-1 t-rounded-md t-border <% if (obra.estado === 'activa') { %>t-bg-green-50 t-border-green-500 t-text-green-500<% } else if (obra.estado === 'pausada') { %>t-bg-yellow-50 t-border-yellow-500 t-text-yellow-500<% } else { %>t-bg-gray-50 t-border-gray-500 t-text-gray-500<% } %>">
                       <%= obra.estado.charAt(0).toUpperCase() + obra.estado.slice(1) %>
                     </span>
                   </td>
                   <td>
                     <div class="t-text-sm">
-                      <div><strong>Inicio:</strong> <%= new Date(obra.fechaInicio).toLocaleDateString('es-ES') %></div>
-                      <div><strong>Término:</strong> <%= new Date(obra.fechaTerminoEstimado).toLocaleDateString('es-ES') %></div>
+                      <div>
+                        <strong>Inicio:</strong> <%= new
+                        Date(obra.fechaInicio).toLocaleDateString('es-ES') %>
+                      </div>
+                      <div>
+                        <strong>Término:</strong> <%= new
+                        Date(obra.fechaTerminoEstimado).toLocaleDateString('es-ES') %>
+                      </div>
                       <% if (obra.fechaTerminoReal) { %>
-                        <div class="t-text-green-600"><strong>Finalizada:</strong> <%= new Date(obra.fechaTerminoReal).toLocaleDateString('es-ES') %></div>
+                      <div class="t-text-green-600">
+                        <strong>Finalizada:</strong> <%= new
+                        Date(obra.fechaTerminoReal).toLocaleDateString('es-ES') %>
+                      </div>
                       <% } %>
                     </div>
                   </td>
                   <td>
                     <div class="t-flex t-gap-2">
-                      <button 
-                        onclick="editarObra(<%= obra.id %>)" 
+                      <button
+                        onclick="editarObra(<%= obra.id %>)"
                         class="btn btn--sm t-border t-text-blue-500 t-border-blue-200 hover:t-bg-blue-50 t-px-3 t-py-2">
                         Editar
                       </button>
-                      <button 
-                        onclick="cambiarEstadoObra(<%= obra.id %>)" 
+                      <button
+                        onclick="cambiarEstadoObra(<%= obra.id %>)"
                         class="btn btn--sm t-border t-text-amber-500 t-border-amber-200 hover:t-bg-amber-50 t-px-3 t-py-2">
                         Estado
                       </button>
                       <% if (obra.activa) { %>
-                      <button 
-                        onclick="eliminarObra(<%= obra.id %>)" 
+                      <button
+                        onclick="eliminarObra(<%= obra.id %>)"
                         class="btn btn--sm t-border t-text-red-500 t-border-red-200 hover:t-bg-red-50 t-px-3 t-py-2">
                         Desactivar
                       </button>
@@ -119,22 +138,29 @@
 </div>
 
 <!-- Modal para crear/editar obra -->
-<div id="modalObra" class="t-fixed t-inset-0 t-flex t-items-center t-justify-center t-z-50 t-hidden">
+<div
+  id="modalObra"
+  class="t-fixed t-inset-0 t-flex t-items-center t-justify-center t-z-50 t-hidden">
   <div class="t-absolute t-inset-0 t-bg-black t-opacity-50" id="modalOverlay"></div>
-  
-  <div class="t-bg-white t-rounded-lg t-shadow-xl t-w-full t-max-w-4xl t-z-10 t-relative t-m-4 t-max-h-[90vh] t-overflow-y-auto">
+
+  <div
+    class="t-bg-white t-rounded-lg t-shadow-xl t-w-full t-max-w-4xl t-z-10 t-relative t-m-4 t-max-h-[90vh] t-overflow-y-auto">
     <div class="t-flex t-justify-between t-items-center t-px-6 t-py-4 t-border-b t-border-gray-200">
       <h3 class="t-text-xl t-font-semibold t-text-gray-800" id="modalTitle">Nueva Obra</h3>
       <button id="btnCerrarModal" class="t-text-gray-500 hover:t-text-gray-700">
         <svg class="t-w-6 t-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>
 
     <form id="obraForm" method="POST" class="t-p-6">
       <input type="hidden" id="obraId" name="obraId" />
-      
+
       <div class="t-grid t-grid-cols-1 md:t-grid-cols-2 t-gap-4">
         <div class="form-group md:t-col-span-2">
           <label for="nombre">Nombre de la Obra <span>*</span></label>
@@ -143,7 +169,12 @@
 
         <div class="form-group md:t-col-span-2">
           <label for="direccion">Dirección Completa <span>*</span></label>
-          <textarea id="direccion" name="direccion" required class="form-control" rows="3"></textarea>
+          <textarea
+            id="direccion"
+            name="direccion"
+            required
+            class="form-control"
+            rows="3"></textarea>
         </div>
 
         <div class="form-group md:t-col-span-2">
@@ -153,12 +184,22 @@
 
         <div class="form-group">
           <label for="clienteNombre">Nombre del Cliente <span>*</span></label>
-          <input type="text" id="clienteNombre" name="clienteNombre" required class="form-control" />
+          <input
+            type="text"
+            id="clienteNombre"
+            name="clienteNombre"
+            required
+            class="form-control" />
         </div>
 
         <div class="form-group">
           <label for="clienteCorreo">Correo del Cliente <span>*</span></label>
-          <input type="email" id="clienteCorreo" name="clienteCorreo" required class="form-control" />
+          <input
+            type="email"
+            id="clienteCorreo"
+            name="clienteCorreo"
+            required
+            class="form-control" />
         </div>
 
         <div class="form-group">
@@ -182,11 +223,16 @@
 
         <div class="form-group">
           <label for="fechaTerminoEstimado">Fecha de Término Estimado <span>*</span></label>
-          <input type="date" id="fechaTerminoEstimado" name="fechaTerminoEstimado" required class="form-control" />
+          <input
+            type="date"
+            id="fechaTerminoEstimado"
+            name="fechaTerminoEstimado"
+            required
+            class="form-control" />
         </div>
       </div>
 
-      <div class="form-group" id="activaGroup" style="display: none;">
+      <div class="form-group" id="activaGroup" style="display: none">
         <label class="t-flex t-items-center">
           <input type="checkbox" id="activa" name="activa" class="t-mr-2" />
           Obra Activa
@@ -194,10 +240,15 @@
       </div>
 
       <div class="t-flex t-justify-end t-space-x-3 t-mt-6">
-        <button type="button" id="btnCancelar" class="btn btn--md t-bg-gray-200 hover:t-bg-gray-300 t-text-gray-700">
+        <button
+          type="button"
+          id="btnCancelar"
+          class="btn btn--md t-bg-gray-200 hover:t-bg-gray-300 t-text-gray-700">
           Cancelar
         </button>
-        <button type="submit" class="btn btn--md t-bg-brahma-500 hover:t-bg-brahma-600 t-text-white">
+        <button
+          type="submit"
+          class="btn btn--md t-bg-brahma-500 hover:t-bg-brahma-600 t-text-white">
           Guardar
         </button>
       </div>
@@ -206,22 +257,28 @@
 </div>
 
 <!-- Modal para cambiar estado -->
-<div id="modalEstado" class="t-fixed t-inset-0 t-flex t-items-center t-justify-center t-z-50 t-hidden">
+<div
+  id="modalEstado"
+  class="t-fixed t-inset-0 t-flex t-items-center t-justify-center t-z-50 t-hidden">
   <div class="t-absolute t-inset-0 t-bg-black t-opacity-50"></div>
-  
+
   <div class="t-bg-white t-rounded-lg t-shadow-xl t-w-full t-max-w-md t-z-10 t-relative t-m-4">
     <div class="t-flex t-justify-between t-items-center t-px-6 t-py-4 t-border-b t-border-gray-200">
       <h3 class="t-text-xl t-font-semibold t-text-gray-800">Cambiar Estado</h3>
       <button id="btnCerrarModalEstado" class="t-text-gray-500 hover:t-text-gray-700">
         <svg class="t-w-6 t-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>
 
     <form id="estadoForm" method="POST" class="t-p-6">
       <input type="hidden" id="estadoObraId" name="estadoObraId" />
-      
+
       <div class="form-group">
         <label for="nuevoEstado">Nuevo Estado <span>*</span></label>
         <select id="nuevoEstado" name="estado" required class="form-control">
@@ -232,7 +289,10 @@
       </div>
 
       <div class="t-flex t-justify-end t-space-x-3 t-mt-6">
-        <button type="button" id="btnCancelarEstado" class="btn btn--md t-bg-gray-200 hover:t-bg-gray-300 t-text-gray-700">
+        <button
+          type="button"
+          id="btnCancelarEstado"
+          class="btn btn--md t-bg-gray-200 hover:t-bg-gray-300 t-text-gray-700">
           Cancelar
         </button>
         <button type="submit" class="btn btn--md t-bg-amber-500 hover:t-bg-amber-600 t-text-white">

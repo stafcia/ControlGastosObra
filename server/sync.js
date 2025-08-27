@@ -1,6 +1,6 @@
 require("./config/config");
 const db = require("./config/database");
-const { User, UserType, Obra } = require("./models");
+const { User, UserType, Obra, Periodo, CierrePeriodo } = require("./models");
 const crypto = require("crypto");
 
 async function initializeDatabase() {
@@ -88,6 +88,23 @@ async function initializeDatabase() {
       console.log("Usuario: superadmin");
       console.log("Contraseña: admin123");
       console.log("Correo: admin@controlobra.com");
+    }
+
+    // Generar períodos del año actual si no existen
+    const añoActual = new Date().getFullYear();
+    const periodosExistentes = await Periodo.count({ where: { año: añoActual } });
+    
+    if (periodosExistentes === 0) {
+      console.log(`Generando períodos quincenales para el año ${añoActual}...`);
+      await Periodo.generarPeriodosAnuales(añoActual);
+      
+      // Activar el período actual
+      const periodoActual = await Periodo.obtenerPeriodoActual();
+      if (periodoActual) {
+        periodoActual.activo = true;
+        await periodoActual.save();
+        console.log(`Período actual activado: ${periodoActual.descripcion}`);
+      }
     }
 
     console.log("Base de datos inicializada correctamente");

@@ -1,24 +1,33 @@
 <div class="t-w-full">
   <%- include('../../partials/breadcrumbs'); %>
-  
+
   <div class="t-px-2 sm:t-px-5 md:t-px-10 t-w-full t-min-w-[350px]">
     <%- include('../../partials/page-title'); %>
 
     <!-- Mensajes de error/éxito -->
-    <% if (typeof query !== 'undefined') { %>
-      <% if (query.error) { %>
-        <div id="errorMessage" class="t-bg-red-100 t-border t-border-red-400 t-text-red-700 t-px-4 t-py-3 t-rounded t-mb-4 t-flex t-justify-between t-items-center">
-          <span><%= query.error %></span>
-          <button onclick="cerrarMensaje('errorMessage')" class="t-text-red-700 hover:t-text-red-900 t-font-bold t-text-lg t-leading-none">×</button>
-        </div>
-      <% } %>
-      <% if (query.success) { %>
-        <div id="successMessage" class="t-bg-green-100 t-border t-border-green-400 t-text-green-700 t-px-4 t-py-3 t-rounded t-mb-4 t-flex t-justify-between t-items-center">
-          <span><%= query.success %></span>
-          <button onclick="cerrarMensaje('successMessage')" class="t-text-green-700 hover:t-text-green-900 t-font-bold t-text-lg t-leading-none">×</button>
-        </div>
-      <% } %>
-    <% } %>
+    <% if (typeof query !== 'undefined') { %> <% if (query.error) { %>
+    <div
+      id="errorMessage"
+      class="t-bg-red-100 t-border t-border-red-400 t-text-red-700 t-px-4 t-py-3 t-rounded t-mb-4 t-flex t-justify-between t-items-center">
+      <span><%= query.error %></span>
+      <button
+        onclick="cerrarMensaje('errorMessage')"
+        class="t-text-red-700 hover:t-text-red-900 t-font-bold t-text-lg t-leading-none">
+        ×
+      </button>
+    </div>
+    <% } %> <% if (query.success) { %>
+    <div
+      id="successMessage"
+      class="t-bg-green-100 t-border t-border-green-400 t-text-green-700 t-px-4 t-py-3 t-rounded t-mb-4 t-flex t-justify-between t-items-center">
+      <span><%= query.success %></span>
+      <button
+        onclick="cerrarMensaje('successMessage')"
+        class="t-text-green-700 hover:t-text-green-900 t-font-bold t-text-lg t-leading-none">
+        ×
+      </button>
+    </div>
+    <% } %> <% } %>
 
     <!-- Botón Nuevo Usuario -->
     <div class="t-mb-4 t-flex t-justify-end">
@@ -28,7 +37,7 @@
         + Nuevo Usuario
       </button>
     </div>
-    
+
     <!-- Contenedor de la Tabla -->
     <div class="t-bg-white t-border t-border-gray-200 t-rounded-lg md:t-mb-10">
       <div class="t-p-5 t-border-b t-border-gray-200">
@@ -50,7 +59,10 @@
                 <tr>
                   <td>
                     <div class="t-flex t-items-center">
-                      <span class="btn btn--sm t-border t-text-gray-500 t-border-gray-200 hover:t-bg-gray-50 xl:t-hidden">►</span>
+                      <span
+                        class="btn btn--sm t-border t-text-gray-500 t-border-gray-200 hover:t-bg-gray-50 xl:t-hidden"
+                        >►</span
+                      >
                       <span class="t-ml-2"><%= user.id %></span>
                     </div>
                   </td>
@@ -63,38 +75,38 @@
                   <td>
                     <div>
                       <div class="t-font-medium t-text-gray-900"><%= user.nombreCompleto %></div>
-                      <div class="t-text-sm t-text-gray-500"><%= user.telefono || 'Sin teléfono' %></div>
+                      <div class="t-text-sm t-text-gray-500">
+                        <%= user.telefono || 'Sin teléfono' %>
+                      </div>
                     </div>
                   </td>
                   <td>
-                    <span class="t-inline-block t-text-center t-text-sm t-px-2 t-py-1 t-rounded-md t-border 
-                      <% if (user.userType.id === 1) { %>t-bg-orange-50 t-border-orange-500 t-text-orange-500<% } 
-                         else if (user.userType.id === 2) { %>t-bg-amber-50 t-border-amber-500 t-text-amber-500<% } 
-                         else { %>t-bg-blue-50 t-border-blue-500 t-text-blue-500<% } %>">
+                    <span
+                      class="t-inline-block t-text-center t-text-sm t-px-2 t-py-1 t-rounded-md t-border <% if (user.userType.id === 1) { %>t-bg-orange-50 t-border-orange-500 t-text-orange-500<% } else if (user.userType.id === 2) { %>t-bg-amber-50 t-border-amber-500 t-text-amber-500<% } else { %>t-bg-blue-50 t-border-blue-500 t-text-blue-500<% } %>">
                       <%= user.userType.nombre %>
                     </span>
                   </td>
                   <td>
-                    <span class="t-inline-block t-text-center t-text-sm t-px-2 t-py-1 t-rounded-md t-border 
-                      <% if (user.activo) { %>t-bg-green-50 t-border-green-500 t-text-green-500<% } else { %>t-bg-red-50 t-border-red-500 t-text-red-500<% } %>">
+                    <span
+                      class="t-inline-block t-text-center t-text-sm t-px-2 t-py-1 t-rounded-md t-border <% if (user.activo) { %>t-bg-green-50 t-border-green-500 t-text-green-500<% } else { %>t-bg-red-50 t-border-red-500 t-text-red-500<% } %>">
                       <%= user.activo ? 'Activo' : 'Inactivo' %>
                     </span>
                   </td>
                   <td>
                     <div class="t-flex t-gap-2">
-                      <button 
-                        onclick="editarUsuario(<%= user.id %>)" 
+                      <button
+                        onclick="editarUsuario(<%= user.id %>)"
                         class="btn btn--sm t-border t-text-blue-500 t-border-blue-200 hover:t-bg-blue-50 t-px-3 t-py-2">
                         Editar
                       </button>
-                      <button 
-                        onclick="cambiarPassword(<%= user.id %>)" 
+                      <button
+                        onclick="cambiarPassword(<%= user.id %>)"
                         class="btn btn--sm t-border t-text-amber-500 t-border-amber-200 hover:t-bg-amber-50 t-px-3 t-py-2">
                         Pass
                       </button>
                       <% if (user.activo) { %>
-                      <button 
-                        onclick="eliminarUsuario(<%= user.id %>)" 
+                      <button
+                        onclick="eliminarUsuario(<%= user.id %>)"
                         class="btn btn--sm t-border t-text-red-500 t-border-red-200 hover:t-bg-red-50 t-px-3 t-py-2">
                         Desactivar
                       </button>
@@ -113,31 +125,47 @@
 </div>
 
 <!-- Modal para crear/editar usuario -->
-<div id="modalUsuario" class="t-fixed t-inset-0 t-flex t-items-center t-justify-center t-z-50 t-hidden">
+<div
+  id="modalUsuario"
+  class="t-fixed t-inset-0 t-flex t-items-center t-justify-center t-z-50 t-hidden">
   <div class="t-absolute t-inset-0 t-bg-black t-opacity-50" id="modalOverlay"></div>
-  
+
   <div class="t-bg-white t-rounded-lg t-shadow-xl t-w-full t-max-w-2xl t-z-10 t-relative t-m-4">
     <div class="t-flex t-justify-between t-items-center t-px-6 t-py-4 t-border-b t-border-gray-200">
       <h3 class="t-text-xl t-font-semibold t-text-gray-800" id="modalTitle">Nuevo Usuario</h3>
       <button id="btnCerrarModal" class="t-text-gray-500 hover:t-text-gray-700">
         <svg class="t-w-6 t-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>
 
     <form id="usuarioForm" method="POST" class="t-p-6">
       <input type="hidden" id="usuarioId" name="usuarioId" />
-      
+
       <div class="t-grid t-grid-cols-1 md:t-grid-cols-2 t-gap-4">
         <div class="form-group">
           <label for="nombreUsuario">Nombre de Usuario <span>*</span></label>
-          <input type="text" id="nombreUsuario" name="nombreUsuario" required class="form-control" />
+          <input
+            type="text"
+            id="nombreUsuario"
+            name="nombreUsuario"
+            required
+            class="form-control" />
         </div>
 
         <div class="form-group">
           <label for="nombreCompleto">Nombre Completo <span>*</span></label>
-          <input type="text" id="nombreCompleto" name="nombreCompleto" required class="form-control" />
+          <input
+            type="text"
+            id="nombreCompleto"
+            name="nombreCompleto"
+            required
+            class="form-control" />
         </div>
 
         <div class="form-group">
@@ -166,7 +194,7 @@
         </div>
       </div>
 
-      <div class="form-group" id="activoGroup" style="display: none;">
+      <div class="form-group" id="activoGroup" style="display: none">
         <label class="t-flex t-items-center">
           <input type="checkbox" id="activo" name="activo" class="t-mr-2" />
           Usuario Activo
@@ -174,10 +202,15 @@
       </div>
 
       <div class="t-flex t-justify-end t-space-x-3 t-mt-6">
-        <button type="button" id="btnCancelar" class="btn btn--md t-bg-gray-200 hover:t-bg-gray-300 t-text-gray-700">
+        <button
+          type="button"
+          id="btnCancelar"
+          class="btn btn--md t-bg-gray-200 hover:t-bg-gray-300 t-text-gray-700">
           Cancelar
         </button>
-        <button type="submit" class="btn btn--md t-bg-brahma-500 hover:t-bg-brahma-600 t-text-white">
+        <button
+          type="submit"
+          class="btn btn--md t-bg-brahma-500 hover:t-bg-brahma-600 t-text-white">
           Guardar
         </button>
       </div>
@@ -186,32 +219,43 @@
 </div>
 
 <!-- Modal para cambiar contraseña -->
-<div id="modalPassword" class="t-fixed t-inset-0 t-flex t-items-center t-justify-center t-z-50 t-hidden">
+<div
+  id="modalPassword"
+  class="t-fixed t-inset-0 t-flex t-items-center t-justify-center t-z-50 t-hidden">
   <div class="t-absolute t-inset-0 t-bg-black t-opacity-50"></div>
-  
+
   <div class="t-bg-white t-rounded-lg t-shadow-xl t-w-full t-max-w-md t-z-10 t-relative t-m-4">
     <div class="t-flex t-justify-between t-items-center t-px-6 t-py-4 t-border-b t-border-gray-200">
       <h3 class="t-text-xl t-font-semibold t-text-gray-800">Cambiar Contraseña</h3>
       <button id="btnCerrarModalPassword" class="t-text-gray-500 hover:t-text-gray-700">
         <svg class="t-w-6 t-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </div>
 
     <form id="passwordForm" method="POST" class="t-p-6">
       <input type="hidden" id="passwordUserId" name="passwordUserId" />
-      
+
       <div class="form-group">
         <label for="newPassword">Nueva Contraseña <span>*</span></label>
         <input type="password" id="newPassword" name="newPassword" required class="form-control" />
       </div>
 
       <div class="t-flex t-justify-end t-space-x-3 t-mt-6">
-        <button type="button" id="btnCancelarPassword" class="btn btn--md t-bg-gray-200 hover:t-bg-gray-300 t-text-gray-700">
+        <button
+          type="button"
+          id="btnCancelarPassword"
+          class="btn btn--md t-bg-gray-200 hover:t-bg-gray-300 t-text-gray-700">
           Cancelar
         </button>
-        <button type="submit" class="btn btn--md t-bg-yellow-500 hover:t-bg-yellow-600 t-text-white">
+        <button
+          type="submit"
+          class="btn btn--md t-bg-yellow-500 hover:t-bg-yellow-600 t-text-white">
           Cambiar Contraseña
         </button>
       </div>

@@ -1,0 +1,160 @@
+<%- include('../../partials/breadcrumbs'); %>
+
+<div class="t-container t-mx-auto t-py-6">
+  <%- include('../../partials/page-title'); %>
+
+  <!-- Alertas y notificaciones -->
+  <div id="alertContainer" class="t-mb-4"></div>
+
+  <!-- Resumen del período actual -->
+  <div class="t-bg-white t-rounded-lg t-shadow-sm t-p-6 t-mb-6">
+    <div class="t-flex t-justify-between t-items-center t-mb-4">
+      <h2 class="t-text-xl t-font-semibold t-text-gray-800">
+        <i class="fas fa-calendar-alt t-mr-2"></i>Período Actual
+      </h2>
+      <button onclick="generarPeriodos()" class="t-bg-green-600 t-text-white t-px-4 t-py-2 t-rounded hover:t-bg-green-700 t-transition-colors">
+        <i class="fas fa-plus-circle t-mr-2"></i>Generar Períodos del Año
+      </button>
+    </div>
+    
+    <div id="periodoActualInfo" class="t-grid t-grid-cols-1 md:t-grid-cols-4 t-gap-4">
+      <!-- Se llenará con JavaScript -->
+    </div>
+  </div>
+
+  <!-- Tabla de períodos -->
+  <div class="t-bg-white t-rounded-lg t-shadow-sm t-p-6">
+    <div class="t-flex t-justify-between t-items-center t-mb-4">
+      <h2 class="t-text-xl t-font-semibold t-text-gray-800">
+        <i class="fas fa-list t-mr-2"></i>Gestión de Períodos Quincenales
+      </h2>
+    </div>
+
+    <div class="t-overflow-x-auto">
+      <table id="tablaPeriodos" class="t-min-w-full t-table-auto">
+        <thead class="t-bg-gray-50">
+          <tr>
+            <th class="t-px-4 t-py-3 t-text-left t-text-xs t-font-medium t-text-gray-500 t-uppercase t-tracking-wider">Período</th>
+            <th class="t-px-4 t-py-3 t-text-left t-text-xs t-font-medium t-text-gray-500 t-uppercase t-tracking-wider">Año</th>
+            <th class="t-px-4 t-py-3 t-text-left t-text-xs t-font-medium t-text-gray-500 t-uppercase t-tracking-wider">Fecha Inicio</th>
+            <th class="t-px-4 t-py-3 t-text-left t-text-xs t-font-medium t-text-gray-500 t-uppercase t-tracking-wider">Fecha Fin</th>
+            <th class="t-px-4 t-py-3 t-text-left t-text-xs t-font-medium t-text-gray-500 t-uppercase t-tracking-wider">Estado</th>
+            <th class="t-px-4 t-py-3 t-text-left t-text-xs t-font-medium t-text-gray-500 t-uppercase t-tracking-wider">Progreso Cierres</th>
+            <th class="t-px-4 t-py-3 t-text-left t-text-xs t-font-medium t-text-gray-500 t-uppercase t-tracking-wider">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="t-bg-white t-divide-y t-divide-gray-200">
+          <!-- Se llenará con JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para generar períodos -->
+<div id="modalGenerarPeriodos" class="t-fixed t-inset-0 t-bg-gray-600 t-bg-opacity-50 t-hidden t-items-center t-justify-center t-z-50">
+  <div class="t-bg-white t-rounded-lg t-p-8 t-max-w-md t-w-full">
+    <div class="t-flex t-justify-between t-items-center t-mb-4">
+      <h3 class="t-text-lg t-font-bold">Generar Períodos Quincenales</h3>
+      <button onclick="cerrarModalGenerar()" class="t-text-gray-400 hover:t-text-gray-600">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <form id="formGenerarPeriodos" onsubmit="event.preventDefault(); confirmarGenerarPeriodos();">
+      <div class="t-mb-4">
+        <label for="año" class="t-block t-text-sm t-font-medium t-text-gray-700 t-mb-2">
+          Año a generar:
+        </label>
+        <input type="number" id="año" name="año" min="2020" max="2100" value="<%= new Date().getFullYear() %>" 
+               class="t-mt-1 t-block t-w-full t-rounded-md t-border-gray-300 t-shadow-sm focus:t-border-blue-500 focus:t-ring-blue-500" required>
+      </div>
+      
+      <div class="t-bg-yellow-50 t-border t-border-yellow-200 t-rounded t-p-3 t-mb-4">
+        <p class="t-text-sm t-text-yellow-800">
+          <i class="fas fa-info-circle t-mr-2"></i>
+          Se generarán 24 períodos quincenales para el año seleccionado (2 por cada mes).
+        </p>
+      </div>
+      
+      <div class="t-flex t-justify-end t-gap-2">
+        <button type="button" onclick="cerrarModalGenerar()" 
+                class="t-px-4 t-py-2 t-bg-gray-300 t-text-gray-700 t-rounded hover:t-bg-gray-400 t-transition-colors">
+          Cancelar
+        </button>
+        <button type="submit" 
+                class="t-px-4 t-py-2 t-bg-blue-600 t-text-white t-rounded hover:t-bg-blue-700 t-transition-colors">
+          Generar Períodos
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal para ver estado de cierres -->
+<div id="modalEstadoCierres" class="t-fixed t-inset-0 t-bg-gray-600 t-bg-opacity-50 t-hidden t-items-center t-justify-center t-z-50">
+  <div class="t-bg-white t-rounded-lg t-p-8 t-max-w-4xl t-w-full t-max-h-[80vh] t-overflow-y-auto">
+    <div class="t-flex t-justify-between t-items-center t-mb-4">
+      <h3 class="t-text-lg t-font-bold">Estado de Cierres del Período</h3>
+      <button onclick="cerrarModalCierres()" class="t-text-gray-400 hover:t-text-gray-600">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div id="contenidoEstadoCierres">
+      <!-- Se llenará dinámicamente -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal para cerrar período -->
+<div id="modalCerrarPeriodo" class="t-fixed t-inset-0 t-bg-gray-600 t-bg-opacity-50 t-hidden t-items-center t-justify-center t-z-50">
+  <div class="t-bg-white t-rounded-lg t-p-8 t-max-w-2xl t-w-full">
+    <div class="t-flex t-justify-between t-items-center t-mb-4">
+      <h3 class="t-text-lg t-font-bold">Cerrar Período para Usuarios</h3>
+      <button onclick="cerrarModalCerrar()" class="t-text-gray-400 hover:t-text-gray-600">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <form id="formCerrarPeriodo" onsubmit="event.preventDefault(); ejecutarCierre();">
+      <input type="hidden" id="periodoIdCierre" name="periodoId">
+      
+      <div class="t-mb-4">
+        <label class="t-block t-text-sm t-font-medium t-text-gray-700 t-mb-2">
+          Usuarios a cerrar:
+        </label>
+        <div id="listaUsuariosCerrar" class="t-max-h-48 t-overflow-y-auto t-border t-rounded t-p-2">
+          <!-- Se llenará dinámicamente -->
+        </div>
+      </div>
+      
+      <div class="t-mb-4">
+        <label for="observacionesCierre" class="t-block t-text-sm t-font-medium t-text-gray-700 t-mb-2">
+          Observaciones (opcional):
+        </label>
+        <textarea id="observacionesCierre" name="observaciones" rows="3" 
+                  class="t-mt-1 t-block t-w-full t-rounded-md t-border-gray-300 t-shadow-sm focus:t-border-blue-500 focus:t-ring-blue-500"
+                  placeholder="Ingrese cualquier observación sobre este cierre..."></textarea>
+      </div>
+      
+      <div class="t-bg-red-50 t-border t-border-red-200 t-rounded t-p-3 t-mb-4">
+        <p class="t-text-sm t-text-red-800">
+          <i class="fas fa-exclamation-triangle t-mr-2"></i>
+          <strong>Advertencia:</strong> Una vez cerrado el período, los usuarios no podrán registrar movimientos en él.
+        </p>
+      </div>
+      
+      <div class="t-flex t-justify-end t-gap-2">
+        <button type="button" onclick="cerrarModalCerrar()" 
+                class="t-px-4 t-py-2 t-bg-gray-300 t-text-gray-700 t-rounded hover:t-bg-gray-400 t-transition-colors">
+          Cancelar
+        </button>
+        <button type="submit" 
+                class="t-px-4 t-py-2 t-bg-red-600 t-text-white t-rounded hover:t-bg-red-700 t-transition-colors">
+          <i class="fas fa-lock t-mr-2"></i>Cerrar Período
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

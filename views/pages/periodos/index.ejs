@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <%- include('../../partials/head'); %>
+    <%- include('../../partials/head-datatable'); %>
+  </head>
+  <body class="t-min-h-screen t-bg-gray-100">
+    <div class="t-flex">
+      <%- include('../../partials/nav', { usuario, titulo }); %>
+    <main class="t-w-full">
+
+    <%- include('./main'); %>
+    </main>
+    </div>
+    
+    <%- include('../../partials/foot'); %>
+    <%- include('../../partials/foot-datatable'); %>
+  </body>
+</html>
