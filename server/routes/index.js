@@ -7,5 +7,7 @@ app.use(require("./usuarios"));
 app.use("/obras", require("./obras"));
 app.use("/periodos", require("./periodos"));
 app.use("/cierres", require("./cierres"));
+app.use("/movimientos", require("./movimientos"));
+app.use("/transacciones", require("./transacciones"));
 
 module.exports = app;

@@ -16,6 +16,28 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 let server = http.createServer(app);
+
+// Socket.IO configuration
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+// Make io available globally for routes
+app.set('io', io);
+
+// Socket.IO connection handling
+io.on('connection', (socket) => {
+  console.log('Usuario conectado:', socket.id);
+  
+  // Join user to a room based on their user ID
+  socket.on('join-user-room', (userId) => {
+    socket.join(`user-${userId}`);
+    console.log(`Usuario ${userId} se unió a su sala`);
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('Usuario desconectado:', socket.id);
+  });
+});
 const publicPath = path.resolve(__dirname, "../public");
 app.set("view engine", "ejs");
 app.use(express.static(publicPath));

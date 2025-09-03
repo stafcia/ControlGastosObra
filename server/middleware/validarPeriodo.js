@@ -83,10 +83,25 @@ const obtenerPeriodoActual = async (req, res, next) => {
 // Middleware para verificar permisos de administrador
 const verificarPermisosCierre = async (req, res, next) => {
   try {
-    const userType = req.usuario.userTypeId;
+    const User = require('../models/user');
+    const UserType = require('../models/userType');
+    
+    const user = await User.findByPk(req.usuario.id, {
+      include: [{
+        model: UserType,
+        as: 'userType'
+      }]
+    });
+
+    if (!user || !user.userType) {
+      return res.status(403).json({
+        ok: false,
+        mensaje: 'Usuario no válido'
+      });
+    }
     
     // Solo Super Admin (1) y Admin (2) pueden cerrar períodos
-    if (userType !== 1 && userType !== 2) {
+    if (user.userType.id !== 1 && user.userType.id !== 2) {
       return res.status(403).json({
         ok: false,
         mensaje: 'No tienes permisos para cerrar períodos'
@@ -107,33 +122,48 @@ const verificarPermisosCierre = async (req, res, next) => {
 // Middleware para agregar información del período al contexto
 const agregarInfoPeriodo = async (req, res, next) => {
   try {
-    const userId = req.usuario.id;
+    const User = require('../models/user');
+    const UserType = require('../models/userType');
     
-    // Obtener período actual
-    const periodoActual = await Periodo.obtenerPeriodoActual();
+    // Obtener información completa del usuario
+    const user = await User.findByPk(req.usuario.id, {
+      include: [{
+        model: UserType,
+        as: 'userType'
+      }]
+    });
     
-    if (periodoActual) {
-      // Verificar si está cerrado para el usuario
-      const estaCerrado = await CierrePeriodo.estaCerradoParaUsuario(
-        periodoActual.id, 
-        userId
-      );
+    if (user) {
+      // Agregar información del usuario al request para uso posterior
+      req.userCompleto = user;
       
-      // Calcular días restantes
-      const hoy = new Date();
-      const fechaFin = new Date(periodoActual.fechaFin);
-      const diasRestantes = Math.ceil((fechaFin - hoy) / (1000 * 60 * 60 * 24));
+      // Obtener período actual
+      const periodoActual = await Periodo.obtenerPeriodoActual();
       
-      // Agregar información al request
-      req.infoPeriodo = {
-        periodo: periodoActual,
-        estaCerrado,
-        diasRestantes,
-        proximoAVencer: diasRestantes <= 3
-      };
-      
-      // También agregarlo a res.locals para que esté disponible en las vistas
-      res.locals.infoPeriodo = req.infoPeriodo;
+      if (periodoActual) {
+        // Verificar si está cerrado para el usuario
+        const estaCerrado = await CierrePeriodo.estaCerradoParaUsuario(
+          periodoActual.id, 
+          req.usuario.id
+        );
+        
+        // Calcular días restantes
+        const hoy = new Date();
+        const fechaFin = new Date(periodoActual.fechaFin);
+        const diasRestantes = Math.ceil((fechaFin - hoy) / (1000 * 60 * 60 * 24));
+        
+        // Agregar información al request
+        req.infoPeriodo = {
+          periodo: periodoActual,
+          estaCerrado,
+          diasRestantes,
+          proximoAVencer: diasRestantes <= 3
+        };
+        
+        // También agregarlo a res.locals para que esté disponible en las vistas
+        res.locals.infoPeriodo = req.infoPeriodo;
+        res.locals.usuario = user; // Agregar usuario completo a las vistas
+      }
     }
     
     next();

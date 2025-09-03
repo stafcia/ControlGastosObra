@@ -183,7 +183,9 @@
           <select id="userTypeId" name="userTypeId" required class="form-control">
             <option value="">Seleccionar rol...</option>
             <% userTypes.forEach(type => { %>
-            <option value="<%= type.id %>"><%= type.nombre %></option>
+              <% if (type.id !== 1) { %> <!-- Excluir Super Administrador -->
+                <option value="<%= type.id %>"><%= type.nombre %></option>
+              <% } %>
             <% }); %>
           </select>
         </div>

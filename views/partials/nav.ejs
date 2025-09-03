@@ -12,7 +12,7 @@
   <div
     class="t-px-4 t-py-3 t-text-white t-text-sm t-rounded-md t-flex t-items-center t-font-medium t-opacity-50">
     <i class="fas fa-user t-w-5 t-h-5 t-mr-4"></i>
-    <%= usuario %>
+    <%= usuario.correo %>
   </div>
 
   <span class="t-py-4 t-block">
@@ -67,8 +67,24 @@
       </div>
     </div>
 
+    <!-- Opción de Movimientos -->
+    <a
+      href="/movimientos"
+      class="t-px-4 t-py-3 t-text-white t-rounded-md t-flex t-items-center t-font-medium <% if (seccion === 'movimientos') { %>t-bg-brahma-500<% }else{ %>t-opacity-50 hover:t-opacity-100<% } %>">
+      <i class="fas fa-exchange-alt t-w-5 t-h-5 t-mr-4"></i>
+      Movimientos
+    </a>
+
+    <!-- Opción de Transacciones -->
+    <a
+      href="/transacciones"
+      class="t-px-4 t-py-3 t-text-white t-rounded-md t-flex t-items-center t-font-medium <% if (seccion === 'transacciones') { %>t-bg-brahma-500<% }else{ %>t-opacity-50 hover:t-opacity-100<% } %>">
+      <i class="fas fa-handshake t-w-5 t-h-5 t-mr-4"></i>
+      Transacciones
+    </a>
+
     <!-- Opción de Períodos (solo para administradores) -->
-    <% if (typeof usuario !== 'undefined' && usuario && usuario.userTypeId && (usuario.userTypeId === 1 || usuario.userTypeId === 2)) { %>
+    <% if ((usuario.userTypeId === 1 || usuario.userTypeId === 2)) { %>
     <a
       href="/periodos"
       class="t-px-4 t-py-3 t-text-white t-rounded-md t-flex t-items-center t-font-medium <% if (seccion === 'periodos') { %>t-bg-brahma-500<% }else{ %>t-opacity-50 hover:t-opacity-100<% } %>">

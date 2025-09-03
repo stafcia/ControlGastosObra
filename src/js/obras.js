@@ -122,6 +122,10 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("clienteNombre").value = obra.clienteNombre;
         document.getElementById("clienteCorreo").value = obra.clienteCorreo;
         document.getElementById("clienteTelefono").value = obra.clienteTelefono || "";
+        document.getElementById("razonSocial").value = obra.razonSocial || "";
+        document.getElementById("rfc").value = obra.rfc || "";
+        document.getElementById("regimenFiscal").value = obra.regimenFiscal || "";
+        document.getElementById("codigoPostal").value = obra.codigoPostal || "";
         document.getElementById("estado").value = obra.estado;
         document.getElementById("activa").checked = obra.activa;
         

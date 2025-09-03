@@ -6,6 +6,7 @@ const { verificaAdmin } = require('../middlewares/autorizacion');
 
 // GET - Mostrar lista de obras
 router.get('/', verificaToken, verificaAdmin, async (req, res) => {
+  console.log('Usuario en sesión:', req.usuario);
   try {
     const obras = await Obra.findAll({
       order: [['createdAt', 'DESC']]
@@ -16,7 +17,7 @@ router.get('/', verificaToken, verificaAdmin, async (req, res) => {
       subtitle: 'Administrar obras y proyectos',
       page: 'obras',
       seccion: 'obras',
-      usuario: req.usuario.correo,
+      usuario: req.usuario,
       obras,
       query: req.query
     });
@@ -36,6 +37,10 @@ router.post('/crear', verificaToken, verificaAdmin, async (req, res) => {
       clienteNombre,
       clienteCorreo,
       clienteTelefono,
+      razonSocial,
+      rfc,
+      regimenFiscal,
+      codigoPostal,
       fechaInicio,
       fechaTerminoEstimado
     } = req.body;
@@ -47,6 +52,10 @@ router.post('/crear', verificaToken, verificaAdmin, async (req, res) => {
       clienteNombre,
       clienteCorreo,
       clienteTelefono,
+      razonSocial,
+      rfc,
+      regimenFiscal,
+      codigoPostal,
       fechaInicio,
       fechaTerminoEstimado,
       estado: 'activa',
@@ -76,6 +85,10 @@ router.post('/actualizar/:id', verificaToken, verificaAdmin, async (req, res) =>
       clienteNombre,
       clienteCorreo,
       clienteTelefono,
+      razonSocial,
+      rfc,
+      regimenFiscal,
+      codigoPostal,
       estado,
       fechaInicio,
       fechaTerminoEstimado,
@@ -94,6 +107,10 @@ router.post('/actualizar/:id', verificaToken, verificaAdmin, async (req, res) =>
       clienteNombre,
       clienteCorreo,
       clienteTelefono,
+      razonSocial,
+      rfc,
+      regimenFiscal,
+      codigoPostal,
       estado,
       fechaInicio,
       fechaTerminoEstimado,

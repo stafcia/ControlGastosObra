@@ -124,13 +124,11 @@ Periodo.generarPeriodosAnuales = async function(año) {
   return await Periodo.bulkCreate(periodos);
 };
 
-// Método para obtener el período actual basado en la fecha
+// Método para obtener el período actual basado en el campo activo
 Periodo.obtenerPeriodoActual = async function() {
-  const hoy = new Date();
   return await Periodo.findOne({
     where: {
-      fechaInicio: { [Op.lte]: hoy },
-      fechaFin: { [Op.gte]: hoy }
+      activo: true
     }
   });
 };

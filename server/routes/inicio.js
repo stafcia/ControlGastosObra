@@ -12,7 +12,7 @@ router.get("/inicio", verificaToken, (req, res) => {
     page: "inicio",
     title: "Inicio Aplicacion",
     subtitle: "",
-    usuario: req.usuario.correo,
+    usuario: req.usuario,
   });
 });
 

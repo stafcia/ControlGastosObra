@@ -3,7 +3,7 @@ const router = express.Router();
 const { Periodo, CierrePeriodo, User } = require('../models');
 const { verificaToken } = require('../middlewares/autenticacion');
 const { verificaAdmin } = require('../middlewares/autorizacion');
-const { verificarPermisosCierre, agregarInfoPeriodo } = require('../middleware/validarPeriodo');
+const { agregarInfoPeriodo } = require('../middleware/validarPeriodo');
 const { Op } = require('sequelize');
 
 // Aplicar middleware de autenticación a todas las rutas

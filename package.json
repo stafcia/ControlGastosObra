@@ -7,7 +7,7 @@
     "dbDev": "http://localhost:3005"
   },
   "scripts": {
-    "browserSync": "browser-sync start --proxy \"$npm_package_config_dbDev\" --files \"src/**/*,server/**/*,views/**/*\"",
+    "browserSync": "browser-sync start --config bs-config.js",
     "cssWatch": "npx tailwindcss -i src/css/app.css --postcss -o public/assets/css/app.css -w",
     "cssBuild": "npx tailwindcss -i src/css/app.css --postcss -o public/assets/css/app.css -m",
     "jsWatch": "babel src/js/* -w -d public/assets/js/ -s --verbose",
@@ -52,6 +52,7 @@
     "nodemon": "^3.1.9",
     "path": "^0.12.7",
     "sequelize": "^6.14.1",
+    "socket.io": "^4.8.1",
     "svgo": "^3.0.1"
   }
 }

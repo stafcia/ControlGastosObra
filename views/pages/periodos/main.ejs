@@ -1,13 +1,16 @@
-<%- include('../../partials/breadcrumbs'); %>
+<div class="t-w-full">
+  <%- include('../../partials/breadcrumbs'); %>
 
-<div class="t-container t-mx-auto t-py-6">
-  <%- include('../../partials/page-title'); %>
+  <div class="t-px-2 sm:t-px-5 md:t-px-10 t-w-full t-min-w-[350px]">
+    <div class="t-pt-4">
+      <%- include('../../partials/page-title'); %>
+    </div>
 
-  <!-- Alertas y notificaciones -->
-  <div id="alertContainer" class="t-mb-4"></div>
+    <!-- Alertas y notificaciones -->
+    <div id="alertContainer" class="t-mb-4"></div>
 
-  <!-- Resumen del período actual -->
-  <div class="t-bg-white t-rounded-lg t-shadow-sm t-p-6 t-mb-6">
+    <!-- Resumen del período actual -->
+    <div class="t-bg-white t-border t-border-gray-200 t-rounded-lg t-p-6 t-mb-6">
     <div class="t-flex t-justify-between t-items-center t-mb-4">
       <h2 class="t-text-xl t-font-semibold t-text-gray-800">
         <i class="fas fa-calendar-alt t-mr-2"></i>Período Actual
@@ -17,21 +20,47 @@
       </button>
     </div>
     
+    <!-- Línea divisoria -->
+    <div class="t-border-b t-border-gray-200 t-mb-4"></div>
+    
     <div id="periodoActualInfo" class="t-grid t-grid-cols-1 md:t-grid-cols-4 t-gap-4">
       <!-- Se llenará con JavaScript -->
     </div>
   </div>
 
-  <!-- Tabla de períodos -->
-  <div class="t-bg-white t-rounded-lg t-shadow-sm t-p-6">
-    <div class="t-flex t-justify-between t-items-center t-mb-4">
-      <h2 class="t-text-xl t-font-semibold t-text-gray-800">
-        <i class="fas fa-list t-mr-2"></i>Gestión de Períodos Quincenales
-      </h2>
-    </div>
+    <!-- Tabla de períodos -->
+    <div class="t-bg-white t-border t-border-gray-200 t-rounded-lg md:t-mb-10">
+      <div class="t-p-5 t-border-b t-border-gray-200">
+        <div class="t-flex t-justify-between t-items-center t-mb-4">
+          <h2 class="t-text-xl t-font-semibold t-text-gray-800">
+            <i class="fas fa-list t-mr-2"></i>Gestión de Períodos Quincenales
+          </h2>
+        </div>
+        
+        <!-- Línea divisoria -->
+        <div class="t-border-b t-border-gray-200 t-mb-4"></div>
+        
+        <!-- Filtros -->
+        <div class="t-mb-4 t-flex t-gap-4 t-items-center">
+      <div class="t-flex t-items-center">
+        <label class="t-block t-text-sm t-font-medium t-text-gray-700 t-mr-2">
+          Filtrar por estado:
+        </label>
+        <select id="filtroEstado" class="t-block t-px-3 t-py-2 t-border t-border-gray-300 t-rounded-md t-shadow-sm focus:t-outline-none focus:t-ring-blue-500 focus:t-border-blue-500 t-text-sm">
+          <option value="activos">Activos y Próximos</option>
+          <option value="todos">Todos los períodos</option>
+          <option value="finalizados">Solo Finalizados</option>
+        </select>
+      </div>
+      
+          <div class="t-text-sm t-text-gray-600">
+            <span id="contadorPeriodos">Mostrando 0 períodos</span>
+          </div>
+        </div>
 
-    <div class="t-overflow-x-auto">
-      <table id="tablaPeriodos" class="t-min-w-full t-table-auto">
+        <div class="t-flex t-flex-wrap">
+          <div class="t-w-full t-overflow-hidden">
+            <table id="tablaPeriodos" class="display nowrap datatable" style="width: 100%">
         <thead class="t-bg-gray-50">
           <tr>
             <th class="t-px-4 t-py-3 t-text-left t-text-xs t-font-medium t-text-gray-500 t-uppercase t-tracking-wider">Período</th>
@@ -43,10 +72,13 @@
             <th class="t-px-4 t-py-3 t-text-left t-text-xs t-font-medium t-text-gray-500 t-uppercase t-tracking-wider">Acciones</th>
           </tr>
         </thead>
-        <tbody class="t-bg-white t-divide-y t-divide-gray-200">
-          <!-- Se llenará con JavaScript -->
-        </tbody>
-      </table>
+              <tbody>
+                <!-- Se llenará con JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

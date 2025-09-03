@@ -30,7 +30,7 @@ router.get("/usuarios", verificaToken, verificaAdmin, async (req, res) => {
       page: "usuarios",
       title: "Gestión de Usuarios",
       subtitle: "Administrar usuarios y sus permisos",
-      usuario: req.usuario.correo,
+      usuario: req.usuario,
       users: users,
       userTypes: userTypes
     });
@@ -44,6 +44,11 @@ router.get("/usuarios", verificaToken, verificaAdmin, async (req, res) => {
 router.post("/usuarios/crear", verificaToken, verificaAdmin, async (req, res) => {
   try {
     const { nombreUsuario, nombreCompleto, correo, telefono, password, userTypeId } = req.body;
+
+    // Validar que no se intente crear un Super Administrador
+    if (parseInt(userTypeId) === 1) {
+      return res.redirect("/usuarios?error=No se puede crear un usuario con rol de Super Administrador");
+    }
 
     // Verificar si el nombre de usuario ya existe
     const existingUsername = await User.findOne({ where: { nombreUsuario } });
@@ -84,6 +89,22 @@ router.post("/usuarios/actualizar/:id", verificaToken, verificaAdmin, async (req
   try {
     const { nombreUsuario, nombreCompleto, correo, telefono, userTypeId, activo } = req.body;
     const userId = req.params.id;
+
+    // Obtener el usuario actual para verificar si es Super Admin
+    const currentUser = await User.findByPk(userId);
+    if (!currentUser) {
+      return res.redirect("/usuarios?error=Usuario no encontrado");
+    }
+
+    // No permitir cambiar el rol de un Super Admin existente
+    if (currentUser.userTypeId === 1) {
+      return res.redirect("/usuarios?error=No se puede modificar el rol de un Super Administrador");
+    }
+
+    // Validar que no se intente asignar rol de Super Administrador
+    if (parseInt(userTypeId) === 1) {
+      return res.redirect("/usuarios?error=No se puede asignar el rol de Super Administrador");
+    }
 
     // Verificar si el nombre de usuario ya existe para otro usuario
     const existingUsername = await User.findOne({ 

@@ -1,0 +1,237 @@
+
+  <%- include('../../partials/breadcrumbs'); %>
+
+  <div class="t-px-2 sm:t-px-5 md:t-px-10 t-w-full t-min-w-[350px]">
+    <div class="t-pt-4">
+      <%- include('../../partials/page-title'); %>
+    </div>
+
+    <!-- Alertas y notificaciones -->
+    <div id="alertContainer" class="t-mb-4"></div>
+
+    <!-- Mensajes de error/éxito del servidor -->
+    <% if (typeof query !== 'undefined') { %>
+      <% if (query.error) { %>
+        <div id="errorMessage" class="t-bg-red-100 t-border t-border-red-400 t-text-red-700 t-px-4 t-py-3 t-rounded t-mb-4 t-flex t-justify-between t-items-center">
+          <span><%= query.error %></span>
+          <button onclick="cerrarMensaje('errorMessage')" class="t-text-red-700 hover:t-text-red-900 t-font-bold t-text-lg t-leading-none">×</button>
+        </div>
+      <% } %>
+      <% if (query.success) { %>
+        <div id="successMessage" class="t-bg-green-100 t-border t-border-green-400 t-text-green-700 t-px-4 t-py-3 t-rounded t-mb-4 t-flex t-justify-between t-items-center">
+          <span><%= query.success %></span>
+          <button onclick="cerrarMensaje('successMessage')" class="t-text-green-700 hover:t-text-green-900 t-font-bold t-text-lg t-leading-none">×</button>
+        </div>
+      <% } %>
+    <% } %>
+
+    <!-- Resumen financiero -->
+    <div class="t-bg-white t-border t-border-gray-200 t-rounded-lg t-p-6 t-mb-6">
+      <div class="t-flex t-justify-between t-items-center t-mb-4">
+        <h2 class="t-text-xl t-font-semibold t-text-gray-800">
+          <i class="fas fa-chart-line t-mr-2"></i>Resumen Financiero
+          <% if (periodoActual) { %>
+            <span class="t-text-sm t-font-normal t-text-gray-600">- <%= periodoActual.descripcion %></span>
+          <% } %>
+        </h2>
+        <% if (!periodoCerrado) { %>
+          <button onclick="abrirModalMovimiento()" class="t-bg-green-600 t-text-white t-px-4 t-py-2 t-rounded hover:t-bg-green-700 t-transition-colors">
+            <i class="fas fa-plus-circle t-mr-2"></i>Nuevo Movimiento
+          </button>
+        <% } else { %>
+          <span class="t-bg-gray-100 t-text-gray-500 t-px-4 t-py-2 t-rounded t-text-sm">
+            <i class="fas fa-lock t-mr-2"></i>Período Cerrado
+          </span>
+        <% } %>
+      </div>
+      
+      <!-- Línea divisoria -->
+      <div class="t-border-b t-border-gray-200 t-mb-4"></div>
+      
+      <div id="resumenFinanciero" class="t-grid t-grid-cols-1 md:t-grid-cols-3 t-gap-4">
+        <!-- Se llenará con JavaScript -->
+      </div>
+    </div>
+
+    <!-- Filtros y tabla de movimientos -->
+    <div class="t-bg-white t-border t-border-gray-200 t-rounded-lg md:t-mb-10">
+      <div class="t-p-5 t-border-b t-border-gray-200">
+        <div class="t-flex t-justify-between t-items-center t-mb-4">
+          <h2 class="t-text-xl t-font-semibold t-text-gray-800">
+            <i class="fas fa-list t-mr-2"></i>Registro de Movimientos
+          </h2>
+        </div>
+        
+        <!-- Línea divisoria -->
+        <div class="t-border-b t-border-gray-200 t-mb-4"></div>
+        
+        <!-- Filtros -->
+        <div class="t-mb-4 t-grid t-grid-cols-1 md:t-grid-cols-2 lg:t-grid-cols-4 t-gap-4">
+          <div>
+            <label class="t-block t-text-sm t-font-medium t-text-gray-700 t-mb-1">Fecha Inicio:</label>
+            <input type="date" id="fechaInicio" class="t-block t-w-full t-px-3 t-py-2 t-border t-border-gray-300 t-rounded-md t-shadow-sm focus:t-outline-none focus:t-ring-blue-500 focus:t-border-blue-500 t-text-sm">
+          </div>
+          
+          <div>
+            <label class="t-block t-text-sm t-font-medium t-text-gray-700 t-mb-1">Fecha Fin:</label>
+            <input type="date" id="fechaFin" class="t-block t-w-full t-px-3 t-py-2 t-border t-border-gray-300 t-rounded-md t-shadow-sm focus:t-outline-none focus:t-ring-blue-500 focus:t-border-blue-500 t-text-sm">
+          </div>
+          
+          <div>
+            <label class="t-block t-text-sm t-font-medium t-text-gray-700 t-mb-1">Obra:</label>
+            <select id="filtroObra" class="t-block t-w-full t-px-3 t-py-2 t-border t-border-gray-300 t-rounded-md t-shadow-sm focus:t-outline-none focus:t-ring-blue-500 focus:t-border-blue-500 t-text-sm">
+              <option value="">Todas las obras</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="t-block t-text-sm t-font-medium t-text-gray-700 t-mb-1">Tipo:</label>
+            <select id="filtroTipo" class="t-block t-w-full t-px-3 t-py-2 t-border t-border-gray-300 t-rounded-md t-shadow-sm focus:t-outline-none focus:t-ring-blue-500 focus:t-border-blue-500 t-text-sm">
+              <option value="">Todos</option>
+              <option value="Ingreso">Ingresos</option>
+              <option value="Egreso">Egresos</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="t-flex t-justify-between t-items-center">
+          <button onclick="aplicarFiltros()" class="t-bg-blue-600 t-text-white t-px-4 t-py-2 t-rounded hover:t-bg-blue-700 t-transition-colors t-text-sm">
+            <i class="fas fa-search t-mr-2"></i>Filtrar
+          </button>
+          
+          <button onclick="limpiarFiltros()" class="t-bg-gray-500 t-text-white t-px-4 t-py-2 t-rounded hover:t-bg-gray-600 t-transition-colors t-text-sm">
+            <i class="fas fa-eraser t-mr-2"></i>Limpiar
+          </button>
+          
+          <div class="t-text-sm t-text-gray-600">
+            <span id="contadorMovimientos">Cargando...</span>
+          </div>
+        </div>
+
+        <div class="t-flex t-flex-wrap">
+          <div class="t-w-full t-overflow-hidden">
+            <table id="tablaMovimientos" class="display nowrap datatable" style="width: 100%">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Obra</th>
+                  <th>Tipo</th>
+                  <th>Forma Pago</th>
+                  <th>Monto</th>
+                  <th>Concepto</th>
+                  <th>Usuario</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Se llenará con JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal para crear/editar movimiento -->
+<div id="modalMovimiento" class="t-fixed t-inset-0 t-flex t-items-center t-justify-center t-z-50 t-hidden">
+  <div class="t-absolute t-inset-0 t-bg-black t-opacity-50" id="modalOverlay"></div>
+
+  <div class="t-bg-white t-rounded-lg t-shadow-xl t-w-full t-max-w-4xl t-z-10 t-relative t-m-4 t-max-h-[90vh] t-overflow-y-auto">
+    <div class="t-flex t-justify-between t-items-center t-px-6 t-py-4 t-border-b t-border-gray-200">
+      <h3 class="t-text-xl t-font-semibold t-text-gray-800" id="modalTitle">Nuevo Movimiento</h3>
+      <button id="btnCerrarModal" class="t-text-gray-500 hover:t-text-gray-700">
+        <svg class="t-w-6 t-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <form id="movimientoForm" class="t-p-6">
+      <input type="hidden" id="movimientoId" name="movimientoId" />
+
+      <div class="t-grid t-grid-cols-1 md:t-grid-cols-2 t-gap-4">
+        <div class="form-group">
+          <label for="fecha">Fecha del Movimiento <span class="t-text-red-500">*</span></label>
+          <input type="date" id="fecha" name="fecha" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="obraId">Obra <span class="t-text-red-500">*</span></label>
+          <select id="obraId" name="obraId" required class="form-control">
+            <option value="">Seleccione una obra</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="tipo">Tipo de Movimiento <span class="t-text-red-500">*</span></label>
+          <select id="tipo" name="tipo" required class="form-control">
+            <option value="">Seleccione el tipo</option>
+            <option value="Ingreso">Ingreso</option>
+            <option value="Egreso">Egreso</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="formaPago">Forma de Pago <span class="t-text-red-500">*</span></label>
+          <select id="formaPago" name="formaPago" required class="form-control">
+            <option value="">Seleccione forma de pago</option>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Cheque Cliente">Cheque Cliente</option>
+            <option value="Cheque Cta Obra">Cheque Cta Obra</option>
+            <option value="Transferencia Obra">Transferencia a cuenta de la Obra</option>
+            <option value="Transferencia Brahma">Transferencia a cuenta Brahma</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="monto">Monto <span class="t-text-red-500">*</span></label>
+          <div class="t-relative">
+            <span class="t-absolute t-left-3 t-top-3 t-text-gray-500">$</span>
+            <input type="number" id="monto" name="monto" required step="0.01" min="0.01" class="form-control t-pl-8" placeholder="0.00" />
+          </div>
+        </div>
+
+        <div class="form-group md:t-col-span-2">
+          <label for="concepto">Concepto/Descripción <span class="t-text-red-500">*</span></label>
+          <textarea id="concepto" name="concepto" required class="form-control" rows="3" placeholder="Descripción detallada del movimiento"></textarea>
+        </div>
+
+        <div class="form-group md:t-col-span-2">
+          <label for="comprobantes">Comprobantes (Opcional)</label>
+          <div class="t-border-2 t-border-dashed t-border-gray-300 t-rounded-lg t-p-4 t-text-center t-cursor-pointer hover:t-border-gray-400 t-transition-colors">
+            <input type="file" id="comprobantes" name="comprobantes" multiple accept=".pdf,.jpg,.jpeg,.png" class="t-hidden" />
+            <div id="dropZone" onclick="document.getElementById('comprobantes').click()">
+              <i class="fas fa-cloud-upload-alt t-text-3xl t-text-gray-400 t-mb-2"></i>
+              <p class="t-text-gray-600">Haga clic para seleccionar archivos o arrastre aquí</p>
+              <p class="t-text-sm t-text-gray-500">PDF, JPG, PNG (máx. 5 archivos)</p>
+            </div>
+            <div id="listaArchivos" class="t-mt-2 t-hidden"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-flex t-justify-end t-space-x-3 t-mt-6">
+        <button type="button" id="btnCancelar" class="btn btn--md t-bg-gray-200 hover:t-bg-gray-300 t-text-gray-700">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn--md t-bg-green-600 hover:t-bg-green-700 t-text-white">
+          <i class="fas fa-save t-mr-2"></i>Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Script para cerrar mensajes -->
+<script>
+function cerrarMensaje(id) {
+  document.getElementById(id).remove();
+}
+
+// Auto-cerrar mensajes después de 5 segundos
+setTimeout(() => {
+  const messages = document.querySelectorAll('#errorMessage, #successMessage');
+  messages.forEach(msg => msg.remove());
+}, 5000);
+</script>

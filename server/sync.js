@@ -1,6 +1,6 @@
 require("./config/config");
 const db = require("./config/database");
-const { User, UserType, Obra, Periodo, CierrePeriodo } = require("./models");
+const { User, UserType, Obra, Periodo, CierrePeriodo, Movimiento } = require("./models");
 const crypto = require("crypto");
 
 async function initializeDatabase() {
